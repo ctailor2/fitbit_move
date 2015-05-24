@@ -5,6 +5,7 @@ gem 'fitgem'
 
 # Authentication
 gem 'devise'
+gem 'omniauth-fitbit'
 
 # Database
 gem 'pg'
