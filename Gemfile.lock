@@ -51,6 +51,8 @@ GEM
     columnize (0.9.0)
     erubis (2.7.0)
     execjs (2.5.2)
+    fitgem (0.10.0)
+      oauth
     globalid (0.3.5)
       activesupport (>= 4.1.0)
     haml (4.0.6)
@@ -82,6 +84,7 @@ GEM
     minitest (5.6.1)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    oauth (0.4.7)
     pg (0.18.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -157,6 +160,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.1.0)
+  fitgem
   haml-rails (~> 0.9)
   jquery-rails
   pg
