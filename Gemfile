@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 gem 'fitgem'
 
+# Authentication
+gem 'devise'
+
 # Database
 gem 'pg'
 
