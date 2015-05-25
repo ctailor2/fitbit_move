@@ -12,5 +12,7 @@
 !/log/.keep
 /tmp
 
-# Ignore the env vars file
+# Ignore the env vars files
 /config/application.yml
+/config/secrets.yml
+
