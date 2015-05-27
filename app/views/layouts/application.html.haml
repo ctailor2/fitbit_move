@@ -6,10 +6,13 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  %body
+  %body{ style: 'padding-top:50px; padding-bottom:50px;' }
     %nav.navbar.navbar-default.navbar-fixed-top
       .container
-        = button_to 'Sign In with Fitbit', user_omniauth_authorize_path(:fitbit), class: 'btn btn-default navbar-btn navbar-right'
+        - if user_signed_in?
+          = button_to 'Sign Out', logout_path, class: 'btn btn-default navbar-btn navbar-right'
+        - else
+          = button_to 'Sign In with Fitbit', user_omniauth_authorize_path(:fitbit), class: 'btn btn-default navbar-btn navbar-right'
 
     = yield
 
