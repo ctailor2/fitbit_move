@@ -7,4 +7,12 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
+    %nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        = button_to 'Sign In with Fitbit', user_omniauth_authorize_path(:fitbit), class: 'btn btn-default navbar-btn navbar-right'
+
     = yield
+
+    %nav.navbar.navbar-default.navbar-fixed-bottom
+      .container
+
