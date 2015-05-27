@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.1'
 gem 'fitgem'
+gem 'multi_json'
 
 # Authentication
 gem 'devise'
