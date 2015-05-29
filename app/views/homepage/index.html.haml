@@ -23,7 +23,7 @@
               = time_field_tag(:end_time, nil, class: 'form-control')
           .form-group
             = label_tag(:step_goal, 'Step Goal')
-            = number_field_tag(:step_goal, nil, class: 'form-control')
+            = number_field_tag(:step_goal, nil, min: 1000, class: 'form-control')
           .col-lg-6
             .text-center= button_tag('Start', type: 'button', class: 'btn btn-default btn-success action-button', id: 'start-button')
           .col-lg-6
