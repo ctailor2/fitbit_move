@@ -10,9 +10,9 @@
     %nav.navbar.navbar-default.navbar-fixed-top
       .container
         - if user_signed_in?
-          = button_to 'Sign Out', logout_path, class: 'btn btn-default navbar-btn navbar-right'
+          = button_to 'Sign Out', logout_path, class: 'btn btn-default navbar-btn navbar-right', method: :get
         - else
-          = button_to 'Sign In with Fitbit', user_omniauth_authorize_path(:fitbit), class: 'btn btn-default navbar-btn navbar-right'
+          = button_to 'Sign In with Fitbit', user_omniauth_authorize_path(:fitbit), class: 'btn btn-default navbar-btn navbar-right', method: :get
 
     = yield
 
