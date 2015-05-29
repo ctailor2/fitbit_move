@@ -9,7 +9,7 @@
           .text-center.h4 Please Sign In with Fitbit
     - if user_signed_in?
       .row
-        = form_tag('/') do
+        = form_tag('/', method: :get) do
           .form-group
             = label_tag(:polling_interval, 'Polling Interval')
             = select_tag(:polling_interval, options_for_select([['30 min', 30],['1 hr', 60]]), class: 'form-control')
@@ -24,8 +24,10 @@
           .form-group
             = label_tag(:step_goal, 'Step Goal')
             = number_field_tag(:step_goal, nil, class: 'form-control')
-          .text-center
-            = submit_tag('Submit', class: 'btn btn-default btn-primary')
+          .col-lg-6
+            .text-center= button_tag('Start', type: 'button', class: 'btn btn-default btn-success action-button', id: 'start-button')
+          .col-lg-6
+            .text-center= button_tag('Stop', type: 'button', class: 'btn btn-default btn-danger action-button', id: 'stop-button', disabled: true)
       .row
         .well
           .text-center.h4 Today's Step Count
