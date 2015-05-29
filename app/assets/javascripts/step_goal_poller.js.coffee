@@ -9,6 +9,7 @@ $ ->
   startTimeField       = $('#start_time')
   endTimeField         = $('#end_time')
   stepGoalField        = $('#step_goal')
+  formFields           = [pollingIntervalField, startTimeField, endTimeField, stepGoalField]
 
   # Utility Functions
   getDateTime = (timeString) ->
@@ -22,6 +23,12 @@ $ ->
     todayAtHours = new Date(today.setHours(hours))
     todayAtMinutes = new Date(todayAtHours.setMinutes(minutes))
 
+  disableField = (field) ->
+    field.prop('disabled', true)
+
+  enableField = (field) ->
+    field.prop('disabled', false)
+
   # Domain Functions
   formValid = ->
     stepGoalFieldValid = stepGoalField.val() >= 1000
@@ -33,8 +40,18 @@ $ ->
     stepGoalFieldValid && timeFieldsValid
 
   # Event Listeners
+  #*Toggle Buttons
   button.click (event) ->
     if formValid()
       $(this).prop('disabled', true)
       button.not(this).prop('disabled', false)
+
+  #*Toggle Form Fields
+  startButton.click (event) ->
+    if formValid()
+      $.each formFields, ->
+        disableField(this)
+  stopButton.click (event) ->
+    $.each formFields, ->
+      enableField(this)
 
