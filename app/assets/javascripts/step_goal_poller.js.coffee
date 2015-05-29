@@ -11,6 +11,9 @@ $ ->
   stepGoalField        = $('#step_goal')
   formFields           = [pollingIntervalField, startTimeField, endTimeField, stepGoalField]
 
+  # Data Views
+  stepCount = $('#step-count')
+
   # Utility Functions
   getDateTime = (timeString) ->
     return new Date(0) if timeString.length == 0
@@ -39,6 +42,20 @@ $ ->
 
     stepGoalFieldValid && timeFieldsValid
 
+  pollAgainstStepGoal = ->
+    $.ajax
+      url: '/'
+      type: 'GET'
+      dataType: 'json'
+      success: (data) ->
+        currentStepCount = data.step_count
+        stepCount.text(currentStepCount)
+        # TODO: uncomment the below line
+        #checkAgainstStepGoal(currentStepCount)
+
+  checkAgainstStepGoal = (stepCount) ->
+    # TODO: build this out
+
   # Event Listeners
   #*Toggle Buttons
   button.click (event) ->
@@ -54,4 +71,15 @@ $ ->
   stopButton.click (event) ->
     $.each formFields, ->
       enableField(this)
+
+  #*Start Polling
+  startButton.click (event) ->
+    if formValid()
+      frequency = pollingIntervalField.val() * 60 * 1000
+      # TODO: change the below to a setInterval after done testing
+      window.intervalID = setTimeout(pollAgainstStepGoal, 3000)
+
+  #*Stop Polling
+  stopButton.click (event) ->
+    clearInterval(window.intervalID)
 
