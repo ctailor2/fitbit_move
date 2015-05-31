@@ -6,10 +6,9 @@ $ ->
 
   # Form Fields
   pollingIntervalField = $('#polling_interval')
-  startTimeField       = $('#start_time')
   endTimeField         = $('#end_time')
   stepGoalField        = $('#step_goal')
-  formFields           = [pollingIntervalField, startTimeField, endTimeField, stepGoalField]
+  formFields           = [pollingIntervalField, endTimeField, stepGoalField]
 
   # Data Views
   stepCount = $('#step-count')
@@ -34,15 +33,15 @@ $ ->
 
   # Domain Functions
   formValid = ->
-    stepGoalFieldValid = stepGoalField.val() >= 1000
+    stepGoal = stepGoalField.val()
+    stepGoalFieldValid = stepGoal >= 1000
 
     endDateTime = getDateTime(endTimeField.val())
-    startDateTime = getDateTime(startTimeField.val())
-    timeFieldsValid = endDateTime >= startDateTime
-    # TODO: Change validations to remove start time field.
-    # Ensure end time - selected interval time is > current time
+    currentDateTime = new Date()
+    pollingIntervalMillis = pollingIntervalField.val() * 60 * 1000
+    timeFieldValid = (endDateTime.getTime() - currentDateTime.getTime()) > pollingIntervalMillis
 
-    stepGoalFieldValid && timeFieldsValid
+    stepGoalFieldValid && timeFieldValid
 
   pollAgainstStepGoal = ->
     $.ajax
@@ -61,7 +60,6 @@ $ ->
     # Interval is 30 min
     # 5:20pm goal is 7k steps
     # User presses start at 9am
-    # TODO: Remove the start time field as it isn't necessary per this example usage
     # Get current # of steps and store it as the starting # of steps - 3k steps
     # Get current time and store it as the start time - 9am
     # Calculate the number of minutes between the start time and end time - 500 minutes

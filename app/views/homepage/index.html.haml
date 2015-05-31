@@ -13,14 +13,9 @@
           .form-group
             = label_tag(:polling_interval, 'Polling Interval')
             = select_tag(:polling_interval, options_for_select([['30 min', 30],['1 hr', 60]]), class: 'form-control')
-          .col-lg-6
-            .form-group
-              = label_tag(:start_time, 'Start Time')
-              = time_field_tag(:start_time, nil, class: 'form-control')
-          .col-lg-6
-            .form-group
-              = label_tag(:end_time, 'End Time')
-              = time_field_tag(:end_time, nil, class: 'form-control')
+          .form-group
+            = label_tag(:end_time, 'End Time')
+            = time_field_tag(:end_time, nil, class: 'form-control')
           .form-group
             = label_tag(:step_goal, 'Step Goal')
             = number_field_tag(:step_goal, nil, min: 1000, class: 'form-control')
