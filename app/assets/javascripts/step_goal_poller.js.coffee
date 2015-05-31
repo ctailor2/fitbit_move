@@ -90,7 +90,7 @@ $ ->
     # Poller calculates the number of steps needed to catch up to the target - 3240 - 3100 = 140
     stepGapToTarget = currentStepTarget - stepCount
     # Poller calculates the number of min of walking needed to catch up to the target - 140 / 100 = 1.4 ~> 2 minutes
-    minutesToWalk = stepGapToTarget / 100
+    minutesToWalk = Math.ceil(stepGapToTarget / 100)
     # Alert the user that they need to walk for 2 minutes
     alert('Take a walk for ' + minutesToWalk + ' minutes')
     # TODO: Think about what happens if there isn't a complete interval of time left
@@ -121,8 +121,7 @@ $ ->
       frequency = pollingIntervalField.val() * 60 * 1000
       getAndSetStartTime()
       getAndSetStartingSteps()
-      # TODO: change the below to a setInterval after done testing
-      window.intervalID = setTimeout(getAndCheckSteps, 3000)
+      window.intervalID = setInterval(getAndCheckSteps, frequency)
 
   #*Stop Polling
   stopButton.click (event) ->
