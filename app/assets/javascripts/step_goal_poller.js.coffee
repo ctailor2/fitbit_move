@@ -24,6 +24,7 @@ $ ->
     today = new Date()
     todayAtHours = new Date(today.setHours(hours))
     todayAtMinutes = new Date(todayAtHours.setMinutes(minutes))
+    todatAtSeconds = new Date(todayAtMinutes.setSeconds(0))
 
   disableField = (field) ->
     field.prop('disabled', true)
