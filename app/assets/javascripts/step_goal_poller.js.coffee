@@ -43,7 +43,10 @@ $ ->
 
     stepGoalFieldValid && timeFieldValid
 
-  pollAgainstStepGoal = ->
+  getAndSetStartTime = ->
+    window.startDateTime = new Date()
+
+  getStepCount = (callback) ->
     $.ajax
       url: '/'
       type: 'GET'
@@ -51,8 +54,14 @@ $ ->
       success: (data) ->
         currentStepCount = data.step_count
         stepCount.text(currentStepCount)
-        # TODO: uncomment the below line
-        #checkAgainstStepGoal(currentStepCount)
+        if typeof callback == 'function'
+          callback(currentStepCount)
+
+  saveStartingSteps = (stepCount) ->
+    window.startingSteps = stepCount
+
+  getAndSetStartingSteps = ->
+    getStepCount(saveStartingSteps)
 
   checkAgainstStepGoal = (stepCount) ->
     # TODO: build this out
@@ -76,6 +85,9 @@ $ ->
     # TODO: Think about what happens if there isn't a complete interval of time left
     # between the last time the poller woke up and the end time
 
+  getAndCheckSteps = ->
+    getStepCount(checkAgainstStepGoal)
+
   # Event Listeners
   #*Toggle Buttons
   button.click (event) ->
@@ -96,8 +108,10 @@ $ ->
   startButton.click (event) ->
     if formValid()
       frequency = pollingIntervalField.val() * 60 * 1000
+      getAndSetStartTime()
+      getAndSetStartingSteps()
       # TODO: change the below to a setInterval after done testing
-      window.intervalID = setTimeout(pollAgainstStepGoal, 3000)
+      window.intervalID = setTimeout(getAndCheckSteps, 3000)
 
   #*Stop Polling
   stopButton.click (event) ->
