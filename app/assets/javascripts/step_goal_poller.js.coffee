@@ -30,6 +30,15 @@ $ ->
     todayAtMinutes = new Date(todayAtHours.setMinutes(minutes))
     todatAtSeconds = new Date(todayAtMinutes.setSeconds(0))
 
+  getDateTimeDifference = (startDateTime, endDateTime) ->
+    endDateTime - startDateTime
+
+  millisToMinutes = (millis) ->
+    millis / 1000 / 60
+
+  minutesToMillis = (minutes) ->
+    minutes * 60 * 1000
+
   disableField = (field) ->
     field.prop('disabled', true)
 
@@ -44,8 +53,8 @@ $ ->
 
     endDateTime = getDateTime(endTimeField.val())
     currentDateTime = new Date()
-    pollingIntervalMillis = pollingIntervalField.val() * 60 * 1000
-    timeFieldValid = (endDateTime.getTime() - currentDateTime.getTime()) > pollingIntervalMillis
+    pollingIntervalMillis = minutesToMillis(pollingIntervalField.val())
+    timeFieldValid = getDateTimeDifference(currentDateTime, endDateTime) > pollingIntervalMillis
 
     stepGoalFieldValid && timeFieldValid
 
@@ -75,18 +84,20 @@ $ ->
     stepGoal = parseInt(stepGoalField.val())
     currentDateTime = new Date()
 
-    timeRangeMinutes = (endDateTime - window.startDateTime) / 1000 / 60
+    timeRangeMinutes = millisToMinutes(getDateTimeDifference(window.startDateTime, endDateTime))
     stepGap = stepGoal - window.startingSteps
     targetStepsPerMin = stepGap / timeRangeMinutes
 
-    minutesFromStart = (currentDateTime - window.startDateTime) / 1000 / 60
+    minutesFromStart = millisToMinutes(getDateTimeDifference(window.startDateTime, currentDateTime))
     currentStepTarget = window.startingSteps + (minutesFromStart * targetStepsPerMin)
     stepGapToTarget = currentStepTarget - stepCount
 
     minutesToWalk = Math.ceil(stepGapToTarget / stepsPerMinWalking)
     alert('Take a walk for ' + minutesToWalk + ' minutes')
+
     # TODO: Think about what happens if there isn't a complete interval of time left
     # between the last time the poller woke up and the end time
+    # TODO: Also what happens if you need to walk for longer than the polling interval?
 
   getAndCheckSteps = ->
     getStepCount(checkAgainstStepGoal)
