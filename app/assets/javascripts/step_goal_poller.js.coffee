@@ -93,7 +93,8 @@ $ ->
     stepGapToTarget = currentStepTarget - stepCount
 
     minutesToWalk = Math.ceil(stepGapToTarget / stepsPerMinWalking)
-    alert('Take a walk for ' + minutesToWalk + ' minutes')
+    if minutesToWalk > 0
+      alert('Take a walk for ' + minutesToWalk + ' minutes')
 
     # TODO: Think about what happens if there isn't a complete interval of time left
     # between the last time the poller woke up and the end time
