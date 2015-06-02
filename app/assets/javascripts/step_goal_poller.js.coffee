@@ -48,7 +48,7 @@ $ ->
   # Domain Functions
   # ----------------------------------------------------------------------------
   formValid = ->
-    stepGoal = stepGoalField.val()
+    stepGoal = parseInt(stepGoalField.val())
     stepGoalFieldValid = stepGoal >= 1000
 
     endDateTime = getDateTime(endTimeField.val())
