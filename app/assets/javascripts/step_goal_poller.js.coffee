@@ -50,10 +50,12 @@ $ ->
   formValid = ->
     stepGoal = parseInt(stepGoalField.val())
     stepGoalFieldValid = stepGoal >= 1000
+    # TODO: This validation doesn't really make sense. A better one would be
+    # that the step goal needs to be greater than the starting # of steps
 
     endDateTime = getDateTime(endTimeField.val())
     currentDateTime = new Date()
-    pollingIntervalMillis = minutesToMillis(pollingIntervalField.val())
+    pollingIntervalMillis = minutesToMillis(parseInt(pollingIntervalField.val()))
     timeFieldValid = getDateTimeDifference(currentDateTime, endDateTime) > pollingIntervalMillis
 
     stepGoalFieldValid && timeFieldValid
@@ -123,7 +125,7 @@ $ ->
   #*Start Polling
   startButton.click (event) ->
     if formValid()
-      frequency = pollingIntervalField.val() * 60 * 1000
+      frequency = parseInt(pollingIntervalField.val()) * 60 * 1000
       getAndSetStartTime()
       getAndSetStartingSteps()
       window.intervalID = setInterval(getAndCheckSteps, frequency)
