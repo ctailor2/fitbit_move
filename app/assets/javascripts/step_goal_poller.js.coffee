@@ -55,8 +55,7 @@ $ ->
 
     endDateTime = getDateTime(endTimeField.val())
     currentDateTime = new Date()
-    pollingIntervalMillis = minutesToMillis(parseInt(pollingIntervalField.val()))
-    timeFieldValid = getDateTimeDifference(currentDateTime, endDateTime) > pollingIntervalMillis
+    timeFieldValid = endDateTime >= currentDateTime
 
     stepGoalFieldValid && timeFieldValid
 
@@ -98,12 +97,26 @@ $ ->
     if minutesToWalk > 0
       alert('Take a walk for ' + minutesToWalk + ' minutes')
 
-    # TODO: Think about what happens if there isn't a complete interval of time left
-    # between the last time the poller woke up and the end time
     # TODO: Also what happens if you need to walk for longer than the polling interval?
 
   getAndCheckSteps = ->
     getStepCount(checkAgainstStepGoal)
+    managePolling()
+
+  getAndCheckFinalSteps = ->
+    stopButton.click()
+    getStepCount(checkAgainstStepGoal)
+    # TODO: Maybe this should return a message that's different from the usual?
+
+  managePolling = ->
+    endDateTime = getDateTime(endTimeField.val())
+    currentDateTime = new Date()
+    pollingIntervalMillis = minutesToMillis(parseInt(pollingIntervalField.val()))
+    millisUntilEnd = getDateTimeDifference(currentDateTime, endDateTime)
+
+    if millisUntilEnd < pollingIntervalMillis
+      clearInterval(window.intervalID)
+      window.intervalID = setTimeout(getAndCheckFinalSteps, millisUntilEnd)
 
   # Event Listeners
   # ----------------------------------------------------------------------------
@@ -129,6 +142,7 @@ $ ->
       getAndSetStartTime()
       getAndSetStartingSteps()
       window.intervalID = setInterval(getAndCheckSteps, frequency)
+      managePolling()
 
   #*Stop Polling
   stopButton.click (event) ->
